@@ -50,7 +50,7 @@ class PageLang extends \yii\db\ActiveRecord
             }],
             [['name'], 'required'],
             [['page_id', 'language_id'], 'integer'],
-            [['text'], 'string'],
+            [['text', 'short_text'], 'string'],
             [['name'], 'string', 'max' => 100],
             [['title'], 'string', 'max' => 80],
             [['url'], 'string', 'max' => 2000],
@@ -89,8 +89,8 @@ class PageLang extends \yii\db\ActiveRecord
             'title' => Yii::t('modelAdm/admpages', 'Title'),
             'description' => Yii::t('modelAdm/admpages', 'Description'),
             'keywords' => Yii::t('modelAdm/admpages', 'Keywords'),
-            'image' => Yii::t('modelAdm/admpages', 'Image'),
             'alias' => Yii::t('modelAdm/admpages', 'Alias'),
+            'short_text' => Yii::t('modelAdm/admpages', 'Text'),
             'text' => Yii::t('modelAdm/admpages', 'Text'),
         ];
     }

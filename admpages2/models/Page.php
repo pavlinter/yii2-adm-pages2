@@ -48,9 +48,9 @@ use yii\helpers\ArrayHelper;
  * @property string $title
  * @property string $description
  * @property string $keywords
- * @property string $image
  * @property string $alias
  * @property string $url
+ * @property string $short_text
  * @property string $text
  *
  * @property PageLang[] $translations
@@ -59,7 +59,6 @@ use yii\helpers\ArrayHelper;
  */
 class Page extends \yii\db\ActiveRecord
 {
-    static $textBreak = '<div style="page-break-after: always"><span style="display:none">&nbsp;</span></div>';
     /**
      * @inheritdoc
      */
@@ -77,9 +76,9 @@ class Page extends \yii\db\ActiveRecord
                     'title',
                     'description',
                     'keywords',
-                    'image',
                     'alias',
                     'url',
+                    'short_text',
                     'text',
                 ]
             ],
@@ -150,35 +149,6 @@ class Page extends \yii\db\ActiveRecord
             $this->weight = $query->scalar() + 50;
         }
         return parent::beforeSave($insert);
-    }
-
-    /**
-     * @param bool $onlyshort
-     * @return bool|string
-     */
-    public function shortText($onlyshort = false)
-    {
-        $pos = strpos($this->text, static::$textBreak);
-        if ($pos !== false) {
-            return \yii\helpers\StringHelper::truncate($this->text, $pos, null);
-        }
-        if ($onlyshort) {
-            return false;
-        }
-        return $this->text;
-    }
-
-    /**
-     * @param null $encoding
-     * @return string
-     */
-    public function text($encoding = null)
-    {
-        $pos = strpos($this->text, static::$textBreak);
-        if ($pos !== false) {
-            return mb_substr($this->text, $pos + strlen(static::$textBreak), null, Yii::$app->charset);
-        }
-        return $this->text;
     }
 
     /**

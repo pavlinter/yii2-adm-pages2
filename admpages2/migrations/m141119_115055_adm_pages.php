@@ -41,9 +41,9 @@ class m141119_115055_adm_pages extends Migration
             'title' => Schema::TYPE_STRING . "(80)",
             'description' => Schema::TYPE_STRING . "(200)",
             'keywords' => Schema::TYPE_STRING . "(250)",
-            'image' => Schema::TYPE_STRING . "(200)",
             'alias' => Schema::TYPE_STRING . "(200)",
             'url' => Schema::TYPE_STRING . "(2000)",
+            'short_text' => Schema::TYPE_TEXT . " NULL",
             'text' => Schema::TYPE_TEXT,
         ], $tableOptions);
 

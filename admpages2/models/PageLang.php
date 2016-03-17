@@ -90,7 +90,7 @@ class PageLang extends \yii\db\ActiveRecord
             'description' => Yii::t('modelAdm/admpages', 'Description'),
             'keywords' => Yii::t('modelAdm/admpages', 'Keywords'),
             'alias' => Yii::t('modelAdm/admpages', 'Alias'),
-            'short_text' => Yii::t('modelAdm/admpages', 'Text'),
+            'short_text' => Yii::t('modelAdm/admpages', 'Short Text'),
             'text' => Yii::t('modelAdm/admpages', 'Text'),
         ];
     }

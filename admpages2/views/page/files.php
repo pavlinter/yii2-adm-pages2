@@ -7,7 +7,7 @@ use mihaildev\elfinder\Assets;
 use yii\helpers\Url;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Page */
+/* @var $model pavlinter\admpages2\models\Page */
 /* @var $startPath string */
 /* @var $id_parent integer */
 /* @var $elfinderData array */
@@ -34,7 +34,7 @@ $this->registerJs('
     });
 ');
 ?>
-<div class="product-files">
+<div class="admpages-files">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

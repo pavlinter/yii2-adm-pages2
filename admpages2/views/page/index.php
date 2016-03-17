@@ -6,7 +6,7 @@ use pavlinter\admpages2\Module;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\PageSearch */
+/* @var $searchModel pavlinter\admpages2\models\PageSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 /* @var $id_parent integer */
 

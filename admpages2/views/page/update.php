@@ -4,7 +4,7 @@ use pavlinter\admpages2\Module;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Page */
+/* @var $model pavlinter\admpages2\models\Page */
 /* @var $id_parent integer */
 
 Yii::$app->i18n->disableDot();

@@ -25,7 +25,6 @@ Yii2: Adm-Pages 2 Модуль для Adm CMS
         'class' => 'pavlinter\admpages2\Module',
         'pageLayouts' => [
            'page' => 'Page',
-           'page-image' => 'Page + image',
         ],
         'pageRedirect' => [],
         'pageTypes' => [],

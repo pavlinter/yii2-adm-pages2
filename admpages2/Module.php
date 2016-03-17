@@ -68,18 +68,20 @@ class Module extends \yii\base\Module implements AdmBootstrapInterface
             'files' => [
                 'page' => [
                     'dirs' => [
-                        '@webroot/files/pages/{id}/gallery'// {id} - id page
+                        '@webroot/files/data/pages/{id}/main', // {id} - id page
+                        '@webroot/files/data/pages/{id}/gallery'
                     ],
-                    'startPath' => 'pages::{id}', // where :: replace to /
+                    'startPath' => 'data::pages::{id}', // where :: replace to /
                     'maxWidth' => 1500,
                     'maxHeight' => 1500,
                     'watermark' => 0, //see https://github.com/pavlinter/yii2-app-core/blob/master/core/elfinder/views/connect.php#L40
                 ],
                 'main' => [
                     'dirs' => [
-                        '@webroot/files/pages/{id}/gallery'
+                        '@webroot/files/data/pages/{id}/main',
+                        '@webroot/files/data/pages/{id}/gallery',
                     ],
-                    'startPath' => 'pages::{id}',
+                    'startPath' => 'data::pages::{id}',
                     'maxWidth' => 1500,
                     'maxHeight' => 1500,
                     'watermark' => 0,
@@ -144,7 +146,7 @@ class Module extends \yii\base\Module implements AdmBootstrapInterface
     public function loading($adm)
     {
         if ($adm->user->can('Adm-Pages')) {
-            $adm->params['left-menu']['admpages'] = [
+            $adm->params['left-menu']['admpages2'] = [
                 'label' => '<i class="fa fa-file-text"></i><span>' . $adm::t('menu', 'Pages') . '</span>',
                 'url' => ['/admpages/page/index', 'id_parent' => 0]
             ];
@@ -157,7 +159,7 @@ class Module extends \yii\base\Module implements AdmBootstrapInterface
     public function beforeAction($action)
     {
         if ($action->controller->id !== 'default') {
-            $adm = Adm::register(); //required load adm,if use adm layout
+            Adm::register(); //required load adm,if use adm layout
             PageAsset::register(Yii::$app->getView());
         }
         return parent::beforeAction($action);

@@ -14,7 +14,7 @@ namespace pavlinter\admpages2;
  */
 class PageAsset extends \yii\web\AssetBundle
 {
-    public $sourcePath = '@vendor/pavlinter/yii2-adm-pages2/admpages/assets';
+    public $sourcePath = '@vendor/pavlinter/yii2-adm-pages2/admpages2/assets';
     public $css = [
 
     ];

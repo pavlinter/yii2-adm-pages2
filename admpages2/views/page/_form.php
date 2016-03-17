@@ -4,12 +4,11 @@ use kartik\checkbox\CheckboxX;
 use pavlinter\admpages2\Module;
 use pavlinter\buttons\InputButton;
 use yii\helpers\ArrayHelper;
-use yii\helpers\Html;
 use pavlinter\adm\Adm;
 use yii\helpers\Url;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Page */
+/* @var $model pavlinter\admpages2\models\Page */
 /* @var $form yii\widgets\ActiveForm */
 /* @var $id_parent integer */
 
@@ -117,16 +116,16 @@ $parentsData = ArrayHelper::map($parents->all(), 'id', 'name');
                                 </div>
 
                             </div>
-                            <div class="col-xs-12 col-sm-6 col-md-6">
-                                <?= Adm::widget('FileInput',[
-                                    'form' => $form,
-                                    'model'      => $modelLang,
-                                    'attribute'  => '['.$id_language.']image',
-                                ]);?>
-                            </div>
                         </div>
 
                         <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <?= Adm::widget('Redactor',[
+                                    'form' => $form,
+                                    'model'      => $modelLang,
+                                    'attribute'  => '['.$id_language.']short_text'
+                                ]) ?>
+                            </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                             <?= Adm::widget('Redactor',[
                                 'form' => $form,

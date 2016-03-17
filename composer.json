@@ -1,0 +1,25 @@
+{
+    "name": "pavlinter/yii2-adm-pages2",
+    "description": "Yii2: Adm-Pages 2",
+    "keywords": ["yii2", "adm", "cms","adm-pages2"],
+    "type": "yii2-extension",
+    "license": "BSD 3-Clause",
+    "support": {
+        "issues": "https://github.com/pavlinter/yii2-adm-pages2/issues",
+        "source": "https://github.com/pavlinter/yii2-adm-pages2"
+    },
+    "authors": [
+        {
+            "name": "Pavels Radajevs",
+            "email": "pavlinter@gmail.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "pavlinter\\": ""
+        }
+    }
+}

@@ -47,7 +47,6 @@ use yii\helpers\ArrayHelper;
  * @property string $name
  * @property string $title
  * @property string $description
- * @property string $keywords
  * @property string $alias
  * @property string $url
  * @property string $short_text
@@ -75,7 +74,6 @@ class Page extends \yii\db\ActiveRecord
                     'name',
                     'title',
                     'description',
-                    'keywords',
                     'alias',
                     'url',
                     'short_text',
@@ -105,7 +103,12 @@ class Page extends \yii\db\ActiveRecord
             [['id_parent', 'weight', 'visible', 'active'], 'integer'],
             [['layout', 'type'], 'required'],
             [['layout', 'type'], 'string', 'max' => 50],
-            [['date'], 'date', 'format' => 'yyyy-MM-dd HH:mm:ss'],
+            [['date'], 'date', 'format' => 'yyyy-MM-dd HH:mm:ss', 'isEmpty' => function ($value) {
+                if(!$value){
+                    $this->date = date('Y-m-d H:i:00');
+                }
+                return false;
+            }],
             [['layout'], 'in', 'range' => array_keys($module->pageLayouts)],
             [['type'], 'in', 'range' => array_keys($module->pageTypes)],
         ];
@@ -239,7 +242,6 @@ class Page extends \yii\db\ActiveRecord
         }
         if ($config['registerMetaTag']) {
             Yii::$app->getView()->registerMetaTag(['name' => 'description', 'content' => $model->description]);
-            Yii::$app->getView()->registerMetaTag(['name' => 'keywords', 'content' => $model->keywords]);
         }
         return $model;
     }
@@ -363,6 +365,45 @@ class Page extends \yii\db\ActiveRecord
             $url = $options['defaultUrl'];
         }
         return \yii\helpers\Url::to($url, $scheme);
+    }
+
+    /**
+     * @param $breadcrumbs
+     * @param null $id_parent
+     * @param array $options
+     */
+    public static function breadcrumbsTree(&$breadcrumbs, $id_parent = null, $options = [])
+    {
+        if (!$id_parent) {
+            return;
+        }
+        $options = ArrayHelper::merge([
+            'level' => ArrayHelper::remove($options, 'level', 0),
+            'lastLink' => false,
+            'url' => ArrayHelper::remove($options, 'url', ['index']),
+        ], $options);
+        $options['level']++;
+
+        $model = static::find()->where(['id' => $id_parent])->one();
+        if($model !== null){
+            $id_parent = $model->id;
+            if($id_parent == null){
+                $id_parent = 0;
+            }
+
+            $url = ArrayHelper::merge($options['url'], ['id_parent' => $id_parent]);
+            if ($options['level'] == 1 && !$options['lastLink']) {
+                $item = $model->name;
+            } else {
+                $item = ['label' => $model->name, 'url' => $url];
+            }
+            if($breadcrumbs){
+                array_unshift($breadcrumbs, $item);
+            } else {
+                $breadcrumbs = [$item];
+            }
+            static::breadcrumbsTree($breadcrumbs, $model->id_parent, $options);
+        }
     }
 
     /**

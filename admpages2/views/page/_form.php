@@ -84,19 +84,12 @@ $parentsData = ArrayHelper::map($parents->all(), 'id', 'name');
                                 <?= $form->field($modelLang, '['.$id_language.']name')->textInput(['maxlength' => 100]) ?>
                             </div>
                             <div class="col-xs-12 col-sm-6 col-md-6">
-                                <?= $form->field($modelLang, '['.$id_language.']title')->textInput(['maxlength' => 80]) ?>
+                                <?= $form->field($modelLang, '['.$id_language.']title')->textInput(['maxlength' => 70]) ?>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-12 col-sm-6 col-md-6">
-                                <?= $form->field($modelLang, '['.$id_language.']description')->textarea(['maxlength' => 200]) ?>
-                            </div>
-                            <div class="col-xs-12 col-sm-6 col-md-6">
-                                <?= $form->field($modelLang, '['.$id_language.']keywords')->textarea(['maxlength' => 250]) ?>
-                            </div>
-                        </div>
 
-                        <div class="row">
+
                             <div class="col-xs-12 col-sm-6 col-md-6">
                                 <div class="admpage-alias-cont">
                                     <?= $form->field($modelLang, '['.$id_language.']alias',[
@@ -115,6 +108,10 @@ $parentsData = ArrayHelper::map($parents->all(), 'id', 'name');
                                     ])->textInput(['maxlength' => 2000]) ?>
                                 </div>
 
+                            </div>
+
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                <?= $form->field($modelLang, '['.$id_language.']description')->textarea(['maxlength' => 200]) ?>
                             </div>
                         </div>
 

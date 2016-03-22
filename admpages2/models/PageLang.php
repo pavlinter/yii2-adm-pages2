@@ -21,8 +21,6 @@ use yii\helpers\Html;
  * @property string $name
  * @property string $title
  * @property string $description
- * @property string $keywords
- * @property string $image
  * @property string $alias
  * @property string $text
  *
@@ -45,17 +43,16 @@ class PageLang extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'title', 'description', 'keywords', 'url'], 'filter', 'filter' => function ($value) {
+            [['name', 'title', 'description', 'url'], 'filter', 'filter' => function ($value) {
                 return Html::encode($value);
             }],
             [['name'], 'required'],
             [['page_id', 'language_id'], 'integer'],
             [['text', 'short_text'], 'string'],
             [['name'], 'string', 'max' => 100],
-            [['title'], 'string', 'max' => 80],
+            [['title'], 'string', 'max' => 70],
             [['url'], 'string', 'max' => 2000],
-            [['description', 'image', 'alias'], 'string', 'max' => 200],
-            [['keywords'], 'string', 'max' => 250],
+            [['description', 'alias'], 'string', 'max' => 200],
             [['alias'], 'match', 'pattern' => '/^([A-Za-z0-9_-])+$/'],
             [['alias'], 'unique', 'filter' => function ($query) {
                 if (!$this->isNewRecord || $this->scenario == 'update-page-lang') {
@@ -88,7 +85,6 @@ class PageLang extends \yii\db\ActiveRecord
             'name' => Yii::t('modelAdm/admpages', 'Name'),
             'title' => Yii::t('modelAdm/admpages', 'Title'),
             'description' => Yii::t('modelAdm/admpages', 'Description'),
-            'keywords' => Yii::t('modelAdm/admpages', 'Keywords'),
             'alias' => Yii::t('modelAdm/admpages', 'Alias'),
             'short_text' => Yii::t('modelAdm/admpages', 'Short Text'),
             'text' => Yii::t('modelAdm/admpages', 'Text'),

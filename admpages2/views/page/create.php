@@ -9,7 +9,9 @@ use yii\helpers\Html;
 
 Yii::$app->i18n->disableDot();
 $this->title = Module::t('', 'Create Page');
-$this->params['breadcrumbs'][] = ['label' => Module::t('', 'Pages'), 'url' => ['index']];
+$this->params['breadcrumbs'] = [];
+$model::breadcrumbsTree($this->params['breadcrumbs'], $id_parent, ['lastLink' => true]);
+array_unshift($this->params['breadcrumbs'], ['label' => Module::t('', 'Pages'), 'url' => ['index', 'id_parent' => 0]]);
 $this->params['breadcrumbs'][] = $this->title;
 Yii::$app->i18n->resetDot();
 ?>

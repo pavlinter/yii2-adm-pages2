@@ -12,10 +12,10 @@ use yii\helpers\Html;
 
 Yii::$app->i18n->disableDot();
 $this->title = Module::t('', 'Pages');
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'] = [];
+$searchModel::breadcrumbsTree($this->params['breadcrumbs'], $id_parent);
+array_unshift($this->params['breadcrumbs'], ['label' => $this->title, 'url' => ['index', 'id_parent' => 0]]);
 Yii::$app->i18n->resetDot();
-
-
 ?>
 <div class="page-index">
 
@@ -209,7 +209,7 @@ Yii::$app->i18n->resetDot();
                         if (!isset(Module::getInstance()->files[$model->type])) {
                             return null;
                         }
-                        return Html::a('<span class="fa fa-cloud-download"></span>', ['files', 'id' => $model->id], [
+                        return Html::a('<span class="fa fa-cloud-download"></span>', ['files', 'id' => $model->id, 'id_parent' => $model->id], [
                             'title' => Module::t('title', 'Files', ['dot' => false]),
                             'data-pjax' => '0',
                         ]);

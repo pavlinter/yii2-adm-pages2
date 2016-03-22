@@ -13,11 +13,11 @@ use yii\helpers\Url;
 /* @var $elfinderData array */
 
 Yii::$app->i18n->disableDot();
-$this->title = $model->name;
-
-$this->params['breadcrumbs'][] = ['label' => Module::t('', 'Pages'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['update', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = Module::t('', 'Files');
+$this->title = Module::t('', 'Files Page: ') . ' ' . $model->name;
+$this->params['breadcrumbs'] = [];
+$model::breadcrumbsTree($this->params['breadcrumbs'], $id_parent, ['lastLink' => true]);
+array_unshift($this->params['breadcrumbs'], ['label' => Module::t('', 'Pages'), 'url' => ['index', 'id_parent' => 0]]);
+$this->params['breadcrumbs'][] = $this->title;
 Yii::$app->i18n->resetDot();
 
 Assets::register($this);

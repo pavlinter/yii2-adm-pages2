@@ -82,7 +82,7 @@ class DefaultController extends Controller
             }
         }
 
-        return $this->render('@vendor/pavlinter/yii2-adm-pages2/admpages/views/default/' . $model->layout, [
+        return $this->render('@vendor/pavlinter/yii2-adm-pages2/admpages2/views/default/' . $model->layout, [
             'model' => $model,
         ]);
     }
@@ -137,7 +137,7 @@ class DefaultController extends Controller
             }
         }
 
-        return $this->render('@vendor/pavlinter/yii2-adm-pages2/admpages/views/default/' . $model->layout, [
+        return $this->render('@vendor/pavlinter/yii2-adm-pages2/admpages2/views/default/' . $model->layout, [
             'model' => $model,
         ]);
     }

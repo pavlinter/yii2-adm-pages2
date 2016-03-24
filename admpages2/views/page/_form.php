@@ -141,10 +141,10 @@ $parentsData = ArrayHelper::map($parents->all(), 'id', 'name');
             <div class="col-xs-6 col-sm-4 col-md-4">
                 <?= $form->field($model, 'weight')->textInput(['maxlength' => 10]) ?>
             </div>
-            <div class="col-xs-6 col-sm-4 col-md-4 form-without-label">
+            <div class="col-xs-6 col-sm-4 col-md-2 form-without-label">
                 <?= $form->field($model, 'active', ["template" => "{input}\n{label}\n{hint}\n{error}"])->widget(CheckboxX::classname(), ['pluginOptions'=>['threeState' => false]]); ?>
             </div>
-            <div class="col-xs-6 col-sm-4 col-md-4 form-without-label">
+            <div class="col-xs-6 col-sm-4 col-md-2 form-without-label">
                 <?= $form->field($model, 'visible', ["template" => "{input}\n{label}\n{hint}\n{error}"])->widget(CheckboxX::classname(), ['pluginOptions'=>['threeState' => false]]); ?>
             </div>
         </div>

@@ -23,7 +23,7 @@ class DefaultController extends Controller
     {
 
         $module = Module::getInst();
-
+        $module->layout = $module->pageLayout;
         /* @var $model \pavlinter\admpages2\models\Page */
         if ($alias === '') {
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -42,7 +42,7 @@ class DefaultController extends Controller
                 return \yii\helpers\Url::to($url);
             },
         ]);
-
+        $module::$modelPage = $model;
         if (isset($module->pageRedirect[$model->layout])) {
 
             list(,$params) = Yii::$app->request->resolve();
@@ -50,8 +50,6 @@ class DefaultController extends Controller
 
             if ($newParams instanceof \Closure) {
                 $newParams = call_user_func($newParams, $model, $module);
-            } else {
-                $newParams['modelPage'] = $model;
             }
             $params = ArrayHelper::merge($params, $newParams);
             $route  = ArrayHelper::remove($params, 0);
@@ -90,16 +88,15 @@ class DefaultController extends Controller
     {
         /* @var $module \pavlinter\admpages2\Module */
         $module = Module::getInst();
-
+        $module->layout = $module->pageLayout;
         /* @var $model \pavlinter\admpages2\models\Page */
         $model = $module->manager->createPageQuery('getPage', null, [
             'where' => ['type' => 'main'],
             'orderBy' => ['weight' => SORT_ASC],
         ]);
-
+        $module::$modelPage = $model;
         if (isset($module->pageRedirect[$model->layout])) {
             $params = $module->pageRedirect[$model->layout];
-            $module::$modelPage = $model;
             if ($params instanceof \Closure) {
                 $params = call_user_func($params, $model, $module);
             }

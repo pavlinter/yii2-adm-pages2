@@ -266,10 +266,14 @@ class Page extends \yii\db\ActiveRecord
     }
 
     /**
+     * @param null $id
      * @return mixed
      */
-    public static function currentPage()
+    public static function currentPage($id = null)
     {
+        if($id){
+            Module::$modelPage = Module::getInst()->manager->createPageQuery('getPage', $id);
+        }
         return Module::$modelPage;
     }
 

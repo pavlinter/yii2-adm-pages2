@@ -22,14 +22,13 @@ class DefaultController extends Controller
     public function actionIndex($alias)
     {
 
-        /* @var $module \pavlinter\admpages2\Module */
-        $module = Module::getInstance();
+        $module = Module::getInst();
 
         /* @var $model \pavlinter\admpages2\models\Page */
         if ($alias === '') {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-        $model = $module->manager->createPageQuery('get', null, [
+        $model = $module->manager->createPageQuery('getPage', null, [
             'where' => ['alias' => $alias],
             'url' => function ($model, $id_language, $language) {
                 if ($model->hasTranslation($id_language)) {
@@ -43,10 +42,6 @@ class DefaultController extends Controller
                 return \yii\helpers\Url::to($url);
             },
         ]);
-
-        if (!$model) {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
 
         if (isset($module->pageRedirect[$model->layout])) {
 
@@ -94,25 +89,19 @@ class DefaultController extends Controller
     public function actionMain()
     {
         /* @var $module \pavlinter\admpages2\Module */
-        $module = Module::getInstance();
+        $module = Module::getInst();
 
         /* @var $model \pavlinter\admpages2\models\Page */
-        $model = $module->manager->createPageQuery('get', null, [
+        $model = $module->manager->createPageQuery('getPage', null, [
             'where' => ['type' => 'main'],
             'orderBy' => ['weight' => SORT_ASC],
         ]);
 
-
-        if (!$model) {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-
         if (isset($module->pageRedirect[$model->layout])) {
             $params = $module->pageRedirect[$model->layout];
+            $module::$modelPage = $model;
             if ($params instanceof \Closure) {
                 $params = call_user_func($params, $model, $module);
-            } else {
-                $params['modelPage'] = $model;
             }
             $route  = ArrayHelper::remove($params, 0);
 

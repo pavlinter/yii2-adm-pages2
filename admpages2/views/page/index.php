@@ -86,12 +86,11 @@ Yii::$app->i18n->resetDot();
                 'attribute' => 'layout',
                 'vAlign' => 'middle',
                 'hAlign' => 'center',
-                'vAlign' => 'middle',
                 'filterType' => GridView::FILTER_SELECT2,
-                'filter'=> Module::getInstance()->pageLayouts,
+                'filter'=> Module::getInst()->pageLayouts,
                 'value' => function ($model) {
-                    if (isset(Module::getInstance()->pageLayouts[$model->layout])) {
-                        return Module::getInstance()->pageLayouts[$model->layout];
+                    if (isset(Module::getInst()->pageLayouts[$model->layout])) {
+                        return Module::getInst()->pageLayouts[$model->layout];
                     }
                 },
                 'filterWidgetOptions' => [
@@ -108,10 +107,10 @@ Yii::$app->i18n->resetDot();
                 'vAlign' => 'middle',
                 'hAlign' => 'center',
                 'filterType' => GridView::FILTER_SELECT2,
-                'filter'=> Module::getInstance()->pageTypes,
+                'filter'=> Module::getInst()->pageTypes,
                 'value' => function ($model) {
-                    if (isset(Module::getInstance()->pageTypes[$model->type])) {
-                        return Module::getInstance()->pageTypes[$model->type];
+                    if (isset(Module::getInst()->pageTypes[$model->type])) {
+                        return Module::getInst()->pageTypes[$model->type];
                     }
                 },
                 'filterWidgetOptions' => [
@@ -162,7 +161,7 @@ Yii::$app->i18n->resetDot();
                         ]);
                     },
                     'delete' => function ($url, $model) {
-                        if (in_array($model->id, Module::getInstance()->closeDeletePage)) {
+                        if (in_array($model->id, Module::getInst()->closeDeletePage)) {
                             return null;
                         }
                         $url = ['delete', 'id' => $model->id];
@@ -206,7 +205,7 @@ Yii::$app->i18n->resetDot();
                         ]);
                     },
                     'files' => function ($url, $model) {
-                        if (!isset(Module::getInstance()->files[$model->type])) {
+                        if (!isset(Module::getInst()->files[$model->type])) {
                             return null;
                         }
                         return Html::a('<span class="fa fa-cloud-download"></span>', ['files', 'id' => $model->id, 'id_parent' => $model->id], [

@@ -55,7 +55,7 @@ class PageController extends Controller
     {
         $model = $this->findModel($id);
 
-        $files = Module::getInstance()->files;
+        $files = Module::getInst()->files;
         $startPath = '';
         if (!isset($files[$model->type])) {
             throw new InvalidConfigException('The "files" property for type(' . $model->type . ') must be set.');
@@ -99,7 +99,7 @@ class PageController extends Controller
      */
     public function actionIndex($id_parent = false)
     {
-        $searchModel  = Module::getInstance()->manager->createPageSearch();
+        $searchModel  = Module::getInst()->manager->createPageSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $id_parent);
 
         return $this->render('index', [
@@ -119,7 +119,7 @@ class PageController extends Controller
      */
     public function actionCreate($id = null, $id_parent = null)
     {
-        $model = Module::getInstance()->manager->createPage();
+        $model = Module::getInst()->manager->createPage();
         $model->loadDefaultValues();
         $model->setLangScenario('create-page-lang');
 
@@ -187,7 +187,7 @@ class PageController extends Controller
      */
     public function actionDelete($id, $id_parent = null)
     {
-        if (!in_array($id, Module::getInstance()->closeDeletePage)) {
+        if (!in_array($id, Module::getInst()->closeDeletePage)) {
             $this->findModel($id)->delete();
             Yii::$app->getSession()->setFlash('success', Adm::t('','Data successfully removed!'));
         }
@@ -208,7 +208,7 @@ class PageController extends Controller
     protected function findModel($id)
     {
 
-        $model = Module::getInstance()->manager->createPageQuery('find')->with(['translations'])->where(['id' => $id])->one();
+        $model = Module::getInst()->manager->createPageQuery('find')->with(['translations'])->where(['id' => $id])->one();
         if ($model !== null) {
             return $model;
         } else {

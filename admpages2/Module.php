@@ -20,6 +20,8 @@ use yii\helpers\ArrayHelper;
  */
 class Module extends \yii\base\Module implements AdmBootstrapInterface
 {
+    static $modelPage;
+
     static $layoutAliases;
 
     static $idAliases;
@@ -188,5 +190,13 @@ class Module extends \yii\base\Module implements AdmBootstrapInterface
             $category = 'admpages';
         }
         return Yii::t($category, $message, $params, $language);
+    }
+
+    /**
+     * @return self
+     */
+    public static function getInst()
+    {
+        return Yii::$app->getModule('admpages');
     }
 }

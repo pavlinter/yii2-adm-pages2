@@ -9,6 +9,7 @@
 
 namespace pavlinter\admpages2\models;
 
+use pavlinter\admpages2\Module;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -48,8 +49,7 @@ class PageSearch extends Page
      */
     public function search($params,$id_parent)
     {
-        /* @var \pavlinter\admpages2\Module $module */
-        $module = Yii::$app->getModule('admpages');
+        $module = Module::getInst();
         $pageTable      = static::tableName();
         $pageLangTable  = forward_static_call(array($module->manager->pageLangClass, 'tableName'));
 

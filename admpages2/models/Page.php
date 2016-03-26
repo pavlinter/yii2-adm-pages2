@@ -9,6 +9,7 @@
 
 namespace pavlinter\admpages2\models;
 
+use pavlinter\admpages2\Module;
 use Yii;
 use pavlinter\translation\TranslationBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -96,8 +97,7 @@ class Page extends \yii\db\ActiveRecord
      */
     public function rules()
     {
-        /* @var \pavlinter\admpages2\Module $module */
-        $module = Yii::$app->getModule('admpages');
+        $module = Module::getInst();
         return [
             [['weight', 'id_parent'], 'default', 'value' => null],
             [['id_parent', 'weight', 'visible', 'active'], 'integer'],
@@ -191,11 +191,9 @@ class Page extends \yii\db\ActiveRecord
      * @param array $config
      * @return array|bool|null|\yii\db\ActiveRecord
      */
-    public static function get($id, $config = [])
+    public static function getPage($id, $config = [])
     {
         $config = ArrayHelper::merge([
-            'setLanguageUrl' => true,
-            'registerMetaTag' => true,
             'where' => false,
             'orderBy' => false,
         ], $config);
@@ -209,16 +207,34 @@ class Page extends \yii\db\ActiveRecord
         if ($config['orderBy'] !== false) {
             $query->orderBy($config['orderBy']);
         }
-
+        /* @var $model self */
         $model = $query->one();
 
-        if ($model === null) {
-            return null;
+        if (!$model) {
+            throw new \yii\web\NotFoundHttpException('The requested page does not exist.');
         }
 
         if (!$model->active || !isset($model->translations[Yii::$app->getI18n()->getId()])) {
             return false;
         }
+
+        static::registerSeo($model, $config);
+
+        return $model;
+    }
+
+    /**
+     * @param self
+     * @param array $config
+     */
+    public static function registerSeo($model, $config = [])
+    {
+        /* @var $model self */
+        $config = ArrayHelper::merge([
+            'setLanguageUrl' => true,
+            'registerMetaTag' => true,
+            'registerTitle' => true,
+        ], $config);
 
         if ($config['setLanguageUrl']) {
             if (!isset($config['url'])) {
@@ -226,7 +242,7 @@ class Page extends \yii\db\ActiveRecord
             } else {
                 $url = $config['url'];
             }
-            
+
             foreach (Yii::$app->getI18n()->getLanguages() as $id_language => $language) {
                 if (is_array($url)) {
                     $language['url'] = ArrayHelper::merge($url, [
@@ -243,7 +259,18 @@ class Page extends \yii\db\ActiveRecord
         if ($config['registerMetaTag']) {
             Yii::$app->getView()->registerMetaTag(['name' => 'description', 'content' => $model->description]);
         }
-        return $model;
+        if ($config['registerTitle']) {
+            Yii::$app->getView()->title = $model->title;
+        }
+
+    }
+
+    /**
+     * @return mixed
+     */
+    public static function currentPage()
+    {
+        return Module::$modelPage;
     }
 
     /**
@@ -254,8 +281,7 @@ class Page extends \yii\db\ActiveRecord
      */
     public static function urlLayout($layout, $options = [])
     {
-        /* @var $module \pavlinter\admpages2\Module */
-        $module = Yii::$app->getModule('admpages');
+        $module = Module::getInst();
 
         $options  = ArrayHelper::merge([
             'url' => true,
@@ -313,8 +339,7 @@ class Page extends \yii\db\ActiveRecord
      */
     public static function urlId($id, $options = [])
     {
-        /* @var $module \pavlinter\admpages2\Module */
-        $module = Yii::$app->getModule('admpages');
+        $module = Module::getInst();
 
         $options  = ArrayHelper::merge([
             'url' => true,
@@ -411,8 +436,7 @@ class Page extends \yii\db\ActiveRecord
      */
     public function getTranslations()
     {
-        /* @var \pavlinter\admpages2\Module $module */
-        $module = Yii::$app->getModule('admpages');
+        $module = Module::getInst();
         return $this->hasMany($module->manager->pageLangClass, ['page_id' => 'id'])->indexBy('language_id');
     }
 

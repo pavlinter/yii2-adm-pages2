@@ -9,6 +9,7 @@
 
 namespace pavlinter\admpages2\models;
 
+use pavlinter\admpages2\Module;
 use Yii;
 use yii\helpers\Html;
 
@@ -111,8 +112,7 @@ class PageLang extends \yii\db\ActiveRecord
      */
     public function getPage()
     {
-        /* @var \pavlinter\admpages2\Module $module */
-        $module = Yii::$app->getModule('admpages');
+        $module = Module::getInst();
         return $this->hasOne($module->manager->pageClass, ['id' => 'page_id']);
     }
 }

@@ -12,7 +12,7 @@ use yii\helpers\Url;
 /* @var $form yii\widgets\ActiveForm */
 /* @var $id_parent integer */
 
-$parents = Module::getInstance()->manager->createPageQuery('find')->with(['translations']);
+$parents = Module::getInst()->manager->createPageQuery('find')->with(['translations']);
 if (!$model->isNewRecord) {
     $parents->where(['!=', 'id' , $model->id]);
 }
@@ -40,12 +40,12 @@ $parentsData = ArrayHelper::map($parents->all(), 'id', 'name');
         </div>
         <div class="col-xs-12 col-sm-6 col-md-3">
         <?= $form->field($model, 'layout')->widget(\kartik\widgets\Select2::classname(), [
-            'data' => Module::getInstance()->pageLayouts,
+            'data' => Module::getInst()->pageLayouts,
         ]); ?>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-3">
             <?= $form->field($model, 'type')->widget(\kartik\widgets\Select2::classname(), [
-                'data' => Module::getInstance()->pageTypes,
+                'data' => Module::getInst()->pageTypes,
             ]); ?>
         </div>
 

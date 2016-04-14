@@ -211,7 +211,7 @@ class Page extends \yii\db\ActiveRecord
         $model = $query->one();
 
         if (!$model) {
-            throw new \yii\web\NotFoundHttpException('The requested page does not exist.');
+            throw new \yii\web\NotFoundHttpException(Yii::t('yii', 'Page not found.'));
         }
 
         if (!$model->active || !isset($model->translations[Yii::$app->getI18n()->getId()])) {

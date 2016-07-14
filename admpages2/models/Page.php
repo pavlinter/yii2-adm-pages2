@@ -30,7 +30,8 @@ use yii\helpers\ArrayHelper;
  * @method \pavlinter\translation\TranslationBehavior loadAll
  * @method \pavlinter\translation\TranslationBehavior loadLang
  * @method \pavlinter\translation\TranslationBehavior loadLangs
- * @method \pavlinter\translation\TranslationBehavior getTranslation
+ * @method \pavlinter\translation\TranslationBehavior loadTranslations
+ * @method \pavlinter\translation\TranslationBehavior getOneTranslation
  * @method \pavlinter\translation\TranslationBehavior hasTranslation
  *
  * @property string $id
@@ -53,7 +54,7 @@ use yii\helpers\ArrayHelper;
  * @property string $short_text
  * @property string $text
  *
- * @property PageLang[] $translations
+ * @property PageLang[] $translation
  * @property Page $parent
  * @property Page[] $childs
  */
@@ -168,7 +169,7 @@ class Page extends \yii\db\ActiveRecord
             $url = ['/admpages/default/main'];
             $key = false;
         }
-        return $this->getTranslation($id_language)->url($url, $key);
+        return $this->getOneTranslation($id_language)->url($url, $key);
     }
 
     /**
@@ -198,7 +199,7 @@ class Page extends \yii\db\ActiveRecord
             'orderBy' => false,
         ], $config);
 
-        $query = static::find()->from(['p' => static::tableName()])->innerJoinWith(['translations']);
+        $query = static::find()->from(['p' => static::tableName()])->innerJoinWith(['translation']);
         if ($config['where'] === false) {
             $query->where(['p.id' => $id]);
         } else {
@@ -214,7 +215,7 @@ class Page extends \yii\db\ActiveRecord
             throw new \yii\web\NotFoundHttpException(Yii::t('yii', 'Page not found.'));
         }
 
-        if (!$model->active || !isset($model->translations[Yii::$app->getI18n()->getId()])) {
+        if (!$model->active || !$model->translation) {
             return false;
         }
 
@@ -435,6 +436,14 @@ class Page extends \yii\db\ActiveRecord
         }
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTranslation()
+    {
+        $module = Module::getInst();
+        return $this->hasOne($module->manager->pageLangClass, ['page_id' => 'id'])->andWhere(['language_id' => Yii::$app->i18n->getId()]);
+    }
     /**
      * @return \yii\db\ActiveQuery
      */

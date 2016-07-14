@@ -120,6 +120,7 @@ class PageController extends Controller
     public function actionCreate($id = null, $id_parent = null)
     {
         $model = Module::getInst()->manager->createPage();
+
         $model->loadDefaultValues();
         $model->setLangScenario('create-page-lang');
 

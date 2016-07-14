@@ -64,7 +64,7 @@ class PageSearch extends Page
 
         $query->with([
             'parent',
-            'translations',
+            'translation',
         ]);
 
 

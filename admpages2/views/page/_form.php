@@ -12,13 +12,12 @@ use yii\helpers\Url;
 /* @var $form yii\widgets\ActiveForm */
 /* @var $id_parent integer */
 
-$parents = Module::getInst()->manager->createPageQuery('find')->with(['translations']);
+$parents = Module::getInst()->manager->createPageQuery('find')->with(['translation']);
 if (!$model->isNewRecord) {
     $parents->where(['!=', 'id' , $model->id]);
 }
 
 $parentsData = ArrayHelper::map($parents->all(), 'id', 'name');
-
 ?>
 
 <div class="admpage-form">
@@ -75,7 +74,7 @@ $parentsData = ArrayHelper::map($parents->all(), 'id', 'name');
             <div class="tab-content">
                 <?php
                 foreach (Yii::$app->getI18n()->getLanguages() as $id_language => $language) {
-                    $modelLang = $model->getTranslation($id_language);
+                    $modelLang = $model->getOneTranslation($id_language);
                 ?>
                     <div class="tab-pane" id="lang-<?= $id_language ?>">
 

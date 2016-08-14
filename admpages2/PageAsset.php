@@ -4,7 +4,7 @@
  * @package yii2-adm-pages2
  * @author Pavels Radajevs <pavlinter@gmail.com>
  * @copyright Copyright &copy; Pavels Radajevs <pavlinter@gmail.com>, 2015
- * @version 0.0.2
+ * @version 0.1.0
  */
 
 namespace pavlinter\admpages2;

@@ -34,7 +34,6 @@ class m141119_115055_adm_pages extends Migration
 
 
         $this->createTable('{{%page_lang}}', [
-            'id' => Schema::TYPE_PK,
             'page_id' => Schema::TYPE_INTEGER . " NOT NULL",
             'language_id' => Schema::TYPE_INTEGER . " NOT NULL",
             'name' => Schema::TYPE_STRING . "(100)",
@@ -51,8 +50,10 @@ class m141119_115055_adm_pages extends Migration
         $this->createIndex('language_id', '{{%page_lang}}', 'language_id');
         $this->createIndex('alias', '{{%page_lang}}', 'alias');
 
+        $this->addPrimaryKey('page_language_pk', '{{%page_lang}}', ['page_id', 'language_id']);
+
         $this->addForeignKey('page_lang_ibfk_1', '{{%page_lang}}', 'page_id', '{{%page}}', 'id', 'CASCADE', 'CASCADE');
-        $this->addForeignKey('page_lang_ibfk_2', '{{%page_lang}}', 'language_id', '{{%language}}', 'id');
+        $this->addForeignKey('page_lang_ibfk_2', '{{%page_lang}}', 'language_id', '{{%language}}', 'id', 'CASCADE', 'CASCADE');
 
     }
 

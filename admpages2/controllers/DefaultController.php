@@ -49,6 +49,11 @@ class DefaultController extends Controller
                 return \yii\helpers\Url::to($url);
             },
         ]);
+
+        if (!$model) {
+            throw new NotFoundHttpException(Yii::t('yii', 'Page not found.'));
+        }
+
         $module::$modelPage = $model;
         if (isset($module->pageRedirect[$model->layout])) {
 

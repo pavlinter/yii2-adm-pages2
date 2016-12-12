@@ -183,8 +183,11 @@ class Page extends \yii\db\ActiveRecord
             'url' => true,
             'id_language' => null,
             'key' => 'alias',
+            'params' => [],
         ], $options);
-        return \yii\helpers\Url::to($this->url($options['url'], $options['id_language'], $options['key']), $scheme);
+
+        $url = ArrayHelper::merge($this->url($options['url'], $options['id_language'], $options['key']), $options['params']);
+        return \yii\helpers\Url::to($url, $scheme);
     }
 
     /**
@@ -291,6 +294,7 @@ class Page extends \yii\db\ActiveRecord
         $options  = ArrayHelper::merge([
             'url' => true,
             'key' => 'alias',
+            'params' => [],
         ], $options);
 
         $url = ['/admpages/default/index'];
@@ -313,6 +317,8 @@ class Page extends \yii\db\ActiveRecord
         }
         if (isset($module::$layoutAliases[$layout])) {
             $url[$options['key']] = $module::$layoutAliases[$layout];
+            $url = ArrayHelper::merge($url, $options['params']);
+
         } else {
             $url = null;
         }
@@ -329,6 +335,26 @@ class Page extends \yii\db\ActiveRecord
     {
         $options  = ArrayHelper::merge([
             'defaultUrl' => '/',
+        ], $options);
+        $url = static::urlLayout($layout, $options);
+        if ($url === null) {
+            $url = $options['defaultUrl'];
+        }
+        return \yii\helpers\Url::to($url, $scheme);
+    }
+
+    /**
+     * @param $layout
+     * @param array $params
+     * @param bool $scheme
+     * @param array $options
+     * @return string
+     */
+    public static function urlToLayoutParams($layout, $params = [], $scheme = false, $options = [])
+    {
+        $options  = ArrayHelper::merge([
+            'defaultUrl' => '/',
+            'params' => $params,
         ], $options);
         $url = static::urlLayout($layout, $options);
         if ($url === null) {

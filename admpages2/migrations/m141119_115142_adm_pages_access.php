@@ -4,7 +4,7 @@
  * @package yii2-adm-pages2
  * @author Pavels Radajevs <pavlinter@gmail.com>
  * @copyright Copyright &copy; Pavels Radajevs <pavlinter@gmail.com>, 2015
- * @version 0.1.1
+ * @version 0.1.2
  */
 
 use yii\db\Schema;

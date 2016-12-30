@@ -302,7 +302,7 @@ class Page extends \yii\db\ActiveRecord
             $url = $options['url'];
         }
         if ($module::$layoutAliases === null) {
-            $layouts = Yii::$app->cache->get('admpagesUrlLayout');
+            $layouts = Yii::$app->cache->get('admpagesUrlLayout' . Yii::$app->language);
             if ($layouts === false) {
                 $layouts =  static::find()->from(['p' => static::tableName()])->select(['l.alias', 'p.layout'])
                     ->innerJoin(['l'=> PageLang::tableName()],'l.page_id=p.id AND l.language_id=:language_id',[':language_id' => Yii::$app->getI18n()->getId()])
@@ -311,7 +311,7 @@ class Page extends \yii\db\ActiveRecord
                 $dependency = new \yii\caching\DbDependency([
                     'sql' => 'SELECT MAX(updated_at) FROM ' . static::tableName(),
                 ]);
-                Yii::$app->cache->set('admpagesUrlLayout', $layouts, 86400, $dependency);
+                Yii::$app->cache->set('admpagesUrlLayout' . Yii::$app->language, $layouts, 86400, $dependency);
             }
             $module::$layoutAliases = $layouts;
         }
@@ -383,7 +383,7 @@ class Page extends \yii\db\ActiveRecord
         }
 
         if ($module::$idAliases === null) {
-            $aliases = Yii::$app->cache->get('admpagesUrlId');
+            $aliases = Yii::$app->cache->get('admpagesUrlId' . Yii::$app->language);
             if ($aliases === false) {
                 $aliases =  static::find()->from(['p' => static::tableName()])->select(['l.alias', 'p.id'])
                     ->innerJoin(['l'=> PageLang::tableName()],'l.page_id=p.id AND l.language_id=:language_id',[':language_id' => Yii::$app->getI18n()->getId()])
@@ -392,7 +392,7 @@ class Page extends \yii\db\ActiveRecord
                 $dependency = new \yii\caching\DbDependency([
                     'sql' => 'SELECT MAX(updated_at) FROM ' . static::tableName(),
                 ]);
-                Yii::$app->cache->set('admpagesUrlId', $aliases, 86400, $dependency);
+                Yii::$app->cache->set('admpagesUrlId' . Yii::$app->language, $aliases, 86400, $dependency);
             }
             $module::$idAliases = $aliases;
         }

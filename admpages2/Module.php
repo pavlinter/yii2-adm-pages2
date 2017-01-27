@@ -20,6 +20,8 @@ use yii\helpers\ArrayHelper;
  */
 class Module extends \yii\base\Module implements AdmBootstrapInterface
 {
+    const VERSION = '0.1.3';
+
     static $modelPage;
 
     static $layoutAliases;

@@ -247,7 +247,8 @@ class Page extends \yii\db\ActiveRecord
                 $url = $config['url'];
             }
 
-            foreach (Yii::$app->getI18n()->getLanguages() as $id_language => $language) {
+            $languages = Yii::$app->getI18n()->getLanguages();
+            foreach ($languages as $id_language => $language) {
                 if (is_array($url)) {
                     $language['url'] = ArrayHelper::merge($url, [
                         'lang' => $language[Yii::$app->getI18n()->langColCode],
@@ -257,6 +258,24 @@ class Page extends \yii\db\ActiveRecord
                     $language['url'] = call_user_func($url, $model, $id_language, $language);
                 }
 
+                $href = Url::to($language['url'], true);
+                if ($model->type == 'main') {
+                    if (Yii::$app->i18n->getId() != $id_language) {
+                        Yii::$app->getView()->registerLinkTag([
+                            'rel' => 'alternate',
+                            'hreflang' => $language[Yii::$app->getI18n()->langColCode],
+                            'href' => $href,
+                        ]);
+                    }
+                } else {
+                    if (Yii::$app->i18n->getId() != $id_language) {
+                        Yii::$app->getView()->registerLinkTag([
+                            'rel' => 'alternate',
+                            'hreflang' => $language[Yii::$app->getI18n()->langColCode],
+                            'href' => $href,
+                        ]);
+                    }
+                }
                 Yii::$app->getI18n()->setLanguage($id_language, $language);
             }
         }
@@ -266,7 +285,6 @@ class Page extends \yii\db\ActiveRecord
         if ($config['registerTitle']) {
             Yii::$app->getView()->title = $model->title;
         }
-
     }
 
     /**

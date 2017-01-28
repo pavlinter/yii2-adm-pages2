@@ -258,7 +258,7 @@ class Page extends \yii\db\ActiveRecord
                     $language['url'] = call_user_func($url, $model, $id_language, $language);
                 }
 
-                $href = Url::to($language['url'], true);
+                $href = \yii\helpers\Url::to($language['url'], true);
                 if ($model->type == 'main') {
                     if (Yii::$app->i18n->getId() != $id_language) {
                         Yii::$app->getView()->registerLinkTag([

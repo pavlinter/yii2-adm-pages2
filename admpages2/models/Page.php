@@ -132,6 +132,7 @@ class Page extends \yii\db\ActiveRecord
             'id' => Yii::t('modelAdm/admpages', 'ID'),
             'id_parent' => Yii::t('modelAdm/admpages', 'Parent'),
             'layout' => Yii::t('modelAdm/admpages', 'Layout'),
+            'type' => Yii::t('modelAdm/admpages', 'Type'),
             'weight' => Yii::t('modelAdm/admpages', 'Weight'),
             'visible' => Yii::t('modelAdm/admpages', 'Visible'),
             'active' => Yii::t('modelAdm/admpages', 'Active'),

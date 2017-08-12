@@ -4,7 +4,7 @@
  * @package yii2-adm-pages2
  * @author Pavels Radajevs <pavlinter@gmail.com>
  * @copyright Copyright &copy; Pavels Radajevs <pavlinter@gmail.com>, 2015
- * @version 0.1.4
+ * @version 0.1.5
  */
 
 namespace pavlinter\admpages2;
@@ -20,7 +20,7 @@ use yii\helpers\ArrayHelper;
  */
 class Module extends \yii\base\Module implements AdmBootstrapInterface
 {
-    const VERSION = '0.1.4';
+    const VERSION = '0.1.5';
 
     static $modelPage;
 

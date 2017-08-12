@@ -41,6 +41,24 @@ class PageSearch extends Page
     }
 
     /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        $labels = parent::attributeLabels();
+        return array_merge([
+            'page_id' => Yii::t('modelAdm/admpages', 'Page ID'),
+            'language_id' => Yii::t('modelAdm/admpages', 'Language ID'),
+            'name' => Yii::t('modelAdm/admpages', 'Name'),
+            'title' => Yii::t('modelAdm/admpages', 'Title'),
+            'description' => Yii::t('modelAdm/admpages', 'Description'),
+            'alias' => Yii::t('modelAdm/admpages', 'Alias'),
+            'short_text' => Yii::t('modelAdm/admpages', 'Short Text'),
+            'text' => Yii::t('modelAdm/admpages', 'Text'),
+        ], $labels);
+    }
+
+    /**
      * Creates data provider instance with search query applied
      *
      * @param array $params
